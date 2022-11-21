@@ -219,11 +219,11 @@ Load average: 0.71 0.24 0.40 5/1065 13
 
 每个运⾏中的进程都有⼀个称为 OutOfMemory（OOM）分数的值。系统通过⽐较所有运⾏进程的 OOM 分数来选择要杀掉的进程。当需要释放内存时，分数最⾼的进程将被杀死。OOM 分数由两个参数计算得出：进程已消耗内存占可⽤内存的百分⽐，与⼀个基于 pod QoS 等级和容器内存申请量固定的 OOM 分数调节因⼦。对于两个属于 Burstable 等级的单容器的 pod，系统会杀掉内存实际使⽤量占内存申请量⽐例更⾼的 pod。
 
-### 为命名空间中的 pod 设置默认的 requests 和 limits
+## 4.为命名空间中的 pod 设置默认的 requests 和 limits
 
 为每个容器设置 requests 和 limits 是⼀个很好的实践。
 
-#### LimitRange 资源简介
+### LimitRange 资源简介
 
 ⽤户可以通过创建⼀个 LimitRange 资源来避免必须配置每个容器。LimitRange 资源不仅允许⽤户（为每个命名空间）指定能给容器配置的每种资源的最⼩和最⼤限额，还⽀持在没有显式指定资源 requests 时为容器设置默认值，
 
@@ -232,7 +232,7 @@ Load average: 0.71 0.24 0.40 5/1065 13
 LimitRange 对象的⼀个⼴泛应⽤场景就是阻⽌⽤户创建⼤于单个节点资源量的 pod。
 LimitRange 资源中的 limits 应⽤于同⼀个命名空间中每个独⽴的 pod、容器，或者其他类型的对象。
 
-#### LimitRange 对象的创建
+### LimitRange 对象的创建
 
 ```yaml
 apiVersion: v1
@@ -300,7 +300,7 @@ $ kubectl create -f limits-pod-toobig.yaml
 The Pod "too-big" is invalid: spec.containers[0].resources.requests: Invalid value: "2": must be less than or equal to cpu limit
 ```
 
-## 限制命名空间中的可⽤资源总量
+## 5.限制命名空间中的可⽤资源总量
 
 通过创建⼀个 ResourceQuota 对象可以限制命名空间中的可用资源数量。
 
