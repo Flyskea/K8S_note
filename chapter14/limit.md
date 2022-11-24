@@ -23,7 +23,7 @@ spec:
           cpu: "200m" # 容器申请200毫核（1个cpu核心时间的1/5）
 ```
 
-从图 14.1 中可见，节点上部署了三个 pod。它们共申请了节点 80%的 CPU 和 60%的内存资源。图右下⽅的 pod D 将⽆法调度到这个节点上，因为它 25% 的 CPU requests ⼤于节点未分配的 20%CPU。而实际上，这与当前三个 pod 使用 70%的 CPU 没有什么关系。
+从图 14.1 中可见，节点上部署了三个 pod。它们共申请了节点 80%的 CPU 和 60%的内存资源。图右下方的 pod D 将⽆法调度到这个节点上，因为它 25% 的 CPU requests ⼤于节点未分配的 20%CPU。而实际上，这与当前三个 pod 使用 70%的 CPU 没有什么关系。
 
 ### 调度器如何利用 pod requests 为其选择最佳节点
 
@@ -160,14 +160,14 @@ Load average: 0.71 0.24 0.40 5/1065 13
 
 #### 容器内同样可以看到节点所有的 CPU 核
 
-与内存完全⼀样，⽆论有没有配置 CPU limits，容器内也会看到节点所有的 CPU。将 CPU 限额配置为 1，并不会神奇地只为容器暴露⼀个核。CPU limits 做的只是限制容器使用的 CPU 时间。也可以通过 cgroup 系统直接获取配置的 CPU 限制，请查看下⾯的⽂件：
+与内存完全⼀样，⽆论有没有配置 CPU limits，容器内也会看到节点所有的 CPU。将 CPU 限额配置为 1，并不会神奇地只为容器暴露⼀个核。CPU limits 做的只是限制容器使用的 CPU 时间。也可以通过 cgroup 系统直接获取配置的 CPU 限制，请查看下⾯的文件：
 
 > /sys/fs/cgroup/cpu/cpu.cfs_quota_us
 > /sys/fs/cgroup/cpu/cpu.cfs_period_us
 
 ## 3.pod QoS 等级
 
-假设有两个 pod,pod A 使用了节点内存的 90%,pod B 突然需要⽐之前更多的内存，这时节点⽆法提供⾜量内存，哪个容器将被杀掉呢？Kubernetes ⽆法自⼰做出正确决策，因此就需要⼀种⽅式，我们通过这种⽅式可以指定哪种 pod 在该场景中优先级更⾼。Kubernetes 将 pod 划分为 3 种 QoS 等级：
+假设有两个 pod,pod A 使用了节点内存的 90%,pod B 突然需要⽐之前更多的内存，这时节点⽆法提供⾜量内存，哪个容器将被杀掉呢？Kubernetes ⽆法自⼰做出正确决策，因此就需要⼀种方式，我们通过这种方式可以指定哪种 pod 在该场景中优先级更⾼。Kubernetes 将 pod 划分为 3 种 QoS 等级：
 
 - BestEffort（优先级最低）
 - Burstable
@@ -190,7 +190,7 @@ Load average: 0.71 0.24 0.40 5/1065 13
 
 - pod 分配 Burstable 等级
   其他所有的 pod 都属于这个等级。包括容器的 requests 和 limits 不相同的单容器 pod，
-  ⾄少有⼀个容器只定义了 requests 但没有定义 limits 的 pod，以及⼀个容
+  至少有⼀个容器只定义了 requests 但没有定义 limits 的 pod，以及⼀个容
   器的 requests 和 limits 相等，但是另⼀个容器不指定 requests 或 limits 的
   pod。Burstable pod 可以获得它们所申请的等额资源，并可以使用额外
   的资源（不超过 limits）。
@@ -271,7 +271,7 @@ spec:
         storage: 10Gi
 ```
 
-除了最⼩值、最⼤值和默认值，用户甚⾄可以设置 limits 和 requests 的最⼤⽐例。上⾯⽰例中设置了 maxLimitRequestRatio 为 4，表⽰容器的 CPU limits 不能超过 CPU requests 的 4 倍。因此，对于⼀个申请了 200 毫核的容器，如果它的 CPU 限额设置为 801 毫核或者更⼤就⽆法创建。而对于内存，这个⽐例设为了 10。
+除了最⼩值、最⼤值和默认值，用户甚至可以设置 limits 和 requests 的最⼤⽐例。上⾯⽰例中设置了 maxLimitRequestRatio 为 4，表⽰容器的 CPU limits 不能超过 CPU requests 的 4 倍。因此，对于⼀个申请了 200 毫核的容器，如果它的 CPU 限额设置为 801 毫核或者更⼤就⽆法创建。而对于内存，这个⽐例设为了 10。
 由于 LimitRange 对象中配置的校验（和默认值）信息在 API 服务器接收到新的 pod 或 PVC 创建请求时执行，如果之后修改了限制，已经存在的 pod 和 PVC 将不会再次进行校验，新的限制只会应用于之后创建的 pod 和 PVC。
 
 ### 强制进行限制
