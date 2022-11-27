@@ -191,7 +191,7 @@ spec:
 
 #### 在同⼀个地域中协同部署 pod
 
-为了允许你将 pod 部署在同⼀个地域而不是区域内（云服务提供商通常拥有多个地理地域的数据中⼼，每个地理地域会被划分成多个可用性区域），那么需要将 topologyKey 属性设置为 failure-domain.beta.kubernetes.io/region。
+为了允许你将 pod 部署在同⼀个地域而不是区域内（云服务提供商通常拥有多个地理地域的数据中心，每个地理地域会被划分成多个可用性区域），那么需要将 topologyKey 属性设置为 failure-domain.beta.kubernetes.io/region。
 
 #### 了解 topologyKey 是如何⼯作的
 

@@ -358,7 +358,7 @@ spec:
 
 #### 限制可创建对象的个数
 
-资源配额同样可以限制单个命名空间中的 pod 、ReplicationController、Service 以及其他对象的个数。集群管理员可以根据比如付费计划限制用户能够创建的对象个数，同时也可以用来限制 公⽹ IP 或者 Service 可使用的节点端⼜个数。
+资源配额同样可以限制单个命名空间中的 pod 、ReplicationController、Service 以及其他对象的个数。集群管理员可以根据比如付费计划限制用户能够创建的对象个数，同时也可以用来限制 公网 IP 或者 Service 可使用的节点端⼜个数。
 
 ```yaml
 apiVersion: v1

@@ -196,7 +196,7 @@ kubectl delete po mypod --grace-period=5
 kubectl delete po mypod --grace-period=0 --force
 ```
 
-只有在确认 pod 不会再运行，或者⽆法和集群中的其他成员通信（可以通过托管 pod 的节点⽹络连接失败并且⽆法重连来确认）的情况下再强制删除有状态的 pod。
+只有在确认 pod 不会再运行，或者⽆法和集群中的其他成员通信（可以通过托管 pod 的节点网络连接失败并且⽆法重连来确认）的情况下再强制删除有状态的 pod。
 
 #### 在应用中合理地处理容器关闭操作
 
@@ -268,7 +268,7 @@ kubectl delete po mypod --grace-period=0 --force
 
 ### 给进程终止提供更多的信息
 
-为了让诊断过程更容易，可以使用 Kubernetes 的另⼀个特性，这个特性可以在 pod 状态中很容易地显⽰出容器终止的原因。可以让容器中的进程向容器的文件系统中指定文件写入⼀个终止消息。这个文件的内容会在容器终止后被 Kubelet 读取，然后显⽰在 kubectl describe pod 中。操作⼈员⽆须去查看容器的日志就可以很快地看到应用为什么终止了。这个进程需要写入终止消息的文件默认路径是 /dev/termination/log ，当然这个路径也可以在 pod spec 中容器定义的部分设置 terminationMessagePath 字段来⾃定义。
+为了让诊断过程更容易，可以使用 Kubernetes 的另⼀个特性，这个特性可以在 pod 状态中很容易地显⽰出容器终止的原因。可以让容器中的进程向容器的文件系统中指定文件写入⼀个终止消息。这个文件的内容会在容器终止后被 Kubelet 读取，然后显⽰在 kubectl describe pod 中。操作⼈员⽆须去查看容器的日志就可以很快地看到应用为什么终止了。这个进程需要写入终止消息的文件默认路径是 /dev/termination/log ，当然这个路径也可以在 pod spec 中容器定义的部分设置 terminationMessagePath 字段来自定义。
 
 可以通过运行⼀个容器会⽴即死亡的 pod 来实际看⼀下这个过程:
 
